@@ -1,0 +1,10 @@
+.env
+.env.local
+.env.*.local
+.next
+node_modules
+dist
+build
+payload-types.ts
+media
+*.tsbuildinfo
