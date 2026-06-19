@@ -44,7 +44,7 @@ async function main() {
       collection: 'media',
       data: {
         alt: property.title,
-        cloudinaryUrl: property.mainImageUrl
+        blobUrl: property.mainImageUrl
       },
       overrideAccess: true
     })
@@ -57,10 +57,10 @@ async function main() {
         title: property.title,
         slug: property.slug || slugify(property.title),
         location: property.location,
-        city: property.city,
+        city: property.city as 'Madrid' | 'Tenerife' | 'Otra',
         price: property.price,
         priceNote: property.priceNote,
-        operation: property.operation,
+        operation: property.operation as 'sale' | 'rent' | 'sold',
         propertyType: property.propertyType,
         rooms: property.rooms,
         bathrooms: property.bathrooms,

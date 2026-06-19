@@ -8,3 +8,4 @@ build
 payload-types.ts
 media
 *.tsbuildinfo
+*.log

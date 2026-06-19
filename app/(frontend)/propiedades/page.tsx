@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 
 import { getProperties } from '@/src/lib/content'
+import { breadcrumbJsonLd, jsonLdScript, pageMetadata } from '@/src/lib/seo'
 import { PropertyCard } from '@/src/ui/PropertyCard'
 
-export const metadata: Metadata = {
-  title: 'Propiedades',
-  description: 'Propiedades seleccionadas por Viakasa en Madrid, Tenerife y toda España.'
-}
+export const metadata: Metadata = pageMetadata({
+  title: 'Propiedades en Madrid, Tenerife y toda España',
+  description:
+    'Consulta viviendas seleccionadas por Viakasa: pisos, áticos, villas y oportunidades inmobiliarias con asesoramiento legal y financiero.',
+  path: '/propiedades'
+})
 
 export default async function PropertiesPage() {
   const properties = await getProperties()
@@ -14,6 +17,15 @@ export default async function PropertiesPage() {
 
   return (
     <section className="section section-alt">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: 'Inicio', path: '/' },
+            { name: 'Propiedades', path: '/propiedades' }
+          ])
+        )}
+      />
       <div className="container">
         <span className="eyebrow">Propiedades</span>
         <h1 className="section-title">Viviendas seleccionadas con criterio</h1>

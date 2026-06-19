@@ -1,3 +1,13 @@
+import type { Metadata } from 'next'
+
+import { pageMetadata } from '@/src/lib/seo'
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Aviso legal',
+  description: 'Aviso legal de Viakasa Asesoría Inmobiliaria.',
+  path: '/aviso-legal'
+})
+
 export default function LegalPage() {
   return (
     <article className="legal-card">

@@ -1,17 +1,7 @@
 import type { CollectionConfig } from 'payload'
-import { v2 as cloudinary } from 'cloudinary'
+import { del, put } from '@vercel/blob'
 
 import { isOwnerOrEditor } from '../access'
-
-function uploadToCloudinary(buffer: Buffer, folder: string): Promise<{ secure_url: string; public_id: string }> {
-  return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream({ folder, resource_type: 'image' }, (error, result) => {
-      if (error || !result) reject(error || new Error('No se recibió respuesta de Cloudinary.'))
-      else resolve({ secure_url: result.secure_url, public_id: result.public_id })
-    })
-    stream.end(buffer)
-  })
-}
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -26,7 +16,7 @@ export const Media: CollectionConfig = {
     update: isOwnerOrEditor
   },
   admin: {
-    defaultColumns: ['alt', 'cloudinaryUrl', 'updatedAt'],
+    defaultColumns: ['alt', 'blobUrl', 'updatedAt'],
     useAsTitle: 'alt'
   },
   upload: {
@@ -41,43 +31,35 @@ export const Media: CollectionConfig = {
     afterChange: [
       async ({ doc, operation, req }) => {
         const file = req.file as { data?: Buffer } | undefined
-        if (operation !== 'create' || doc.cloudinaryUrl || !file?.data) return
-        if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) return
-
-        cloudinary.config({
-          cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-          api_key: process.env.CLOUDINARY_API_KEY,
-          api_secret: process.env.CLOUDINARY_API_SECRET
-        })
+        if (operation !== 'create' || doc.blobUrl || !file?.data || !process.env.BLOB_READ_WRITE_TOKEN) return
 
         try {
-          const uploaded = await uploadToCloudinary(file.data, process.env.CLOUDINARY_FOLDER || 'viakasa')
+          const uploaded = await put(`propiedades/${doc.filename || doc.id}`, file.data, {
+            access: 'public',
+            addRandomSuffix: true,
+            contentType: doc.mimeType || 'application/octet-stream'
+          })
           await req.payload.update({
             collection: 'media',
             id: doc.id,
             data: {
-              cloudinaryUrl: uploaded.secure_url,
-              cloudinaryPublicId: uploaded.public_id
+              blobUrl: uploaded.url,
+              blobPathname: uploaded.pathname
             },
             overrideAccess: true
           })
         } catch {
-          req.payload.logger.warn('La imagen se guardó localmente, pero no se pudo publicar en Cloudinary.')
+          req.payload.logger.warn('La imagen se guardó localmente, pero no se pudo publicar en Vercel Blob.')
         }
       }
     ],
     afterDelete: [
       async ({ doc, req }) => {
-        if (!doc.cloudinaryPublicId || !process.env.CLOUDINARY_CLOUD_NAME) return
-        cloudinary.config({
-          cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-          api_key: process.env.CLOUDINARY_API_KEY,
-          api_secret: process.env.CLOUDINARY_API_SECRET
-        })
+        if (!doc.blobUrl || !process.env.BLOB_READ_WRITE_TOKEN) return
         try {
-          await cloudinary.uploader.destroy(doc.cloudinaryPublicId)
+          await del(doc.blobUrl)
         } catch {
-          req.payload.logger.warn('No se pudo eliminar la imagen de Cloudinary.')
+          req.payload.logger.warn('No se pudo eliminar la imagen de Vercel Blob.')
         }
       }
     ]
@@ -90,17 +72,17 @@ export const Media: CollectionConfig = {
       required: true
     },
     {
-      name: 'cloudinaryUrl',
+      name: 'blobUrl',
       type: 'text',
-      label: 'URL de Cloudinary',
+      label: 'URL de Vercel Blob',
       admin: {
-        description: 'Se usa en producción cuando el archivo está publicado en Cloudinary.'
+        description: 'Se usa en producción cuando el archivo está publicado en Vercel Blob.'
       }
     },
     {
-      name: 'cloudinaryPublicId',
+      name: 'blobPathname',
       type: 'text',
-      label: 'ID público de Cloudinary',
+      label: 'Ruta en Vercel Blob',
       admin: {
         readOnly: true
       }

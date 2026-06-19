@@ -1,5 +1,5 @@
 export function formatPrice(price?: number | null) {
-  if (!price) return 'Precio a consultar'
+  if (price == null) return 'Precio a consultar'
   return new Intl.NumberFormat('es-ES', {
     maximumFractionDigits: 0,
     style: 'currency',
@@ -9,8 +9,8 @@ export function formatPrice(price?: number | null) {
 
 export function mediaUrl(media: unknown, fallback = '') {
   if (!media || typeof media !== 'object') return fallback
-  const item = media as { cloudinaryUrl?: string; url?: string }
-  return item.cloudinaryUrl || item.url || fallback
+  const item = media as { blobUrl?: string; url?: string }
+  return item.blobUrl || item.url || fallback
 }
 
 export function operationLabel(value?: string) {

@@ -9,6 +9,7 @@ export function ContactForm({ propertyId }: { propertyId?: string }) {
   return (
     <form action={action} className="contact-card">
       <input type="hidden" name="property" value={propertyId || ''} />
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" />
       <h3>Hablemos de tu vivienda</h3>
       <div className="field">
         <label htmlFor="name">Nombre</label>

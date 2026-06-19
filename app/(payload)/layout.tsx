@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 export default function PayloadLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
+      <head />
       <body>{children}</body>
     </html>
   )

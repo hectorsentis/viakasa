@@ -6,6 +6,7 @@ import { ArrowLeft, Bath, BedDouble, Calendar, Check, Maximize2 } from 'lucide-r
 
 import { getProperty } from '@/src/lib/content'
 import { formatPrice, operationLabel } from '@/src/lib/format'
+import { breadcrumbJsonLd, jsonLdScript, pageMetadata, realEstateListingJsonLd } from '@/src/lib/seo'
 import { ContactForm } from '@/src/ui/ContactForm'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -14,10 +15,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const property = await getProperty(slug)
   if (!property) return {}
-  return {
+  return pageMetadata({
     title: property.title,
-    description: property.description
-  }
+    description: property.description,
+    path: `/propiedades/${property.slug}`,
+    image: property.mainImageUrl
+  })
 }
 
 export default async function PropertyDetailPage({ params }: Props) {
@@ -29,6 +32,17 @@ export default async function PropertyDetailPage({ params }: Props) {
 
   return (
     <section className="detail-hero">
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLdScript(realEstateListingJsonLd(property))} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: 'Inicio', path: '/' },
+            { name: 'Propiedades', path: '/propiedades' },
+            { name: property.title, path: `/propiedades/${property.slug}` }
+          ])
+        )}
+      />
       <div className="container">
         <Link className="eyebrow" href="/propiedades"><ArrowLeft size={15} /> Volver a propiedades</Link>
         <div className="gallery" style={{ marginTop: 28 }}>

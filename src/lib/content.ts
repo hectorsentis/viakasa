@@ -51,6 +51,25 @@ export async function getProperties({ featuredOnly = false } = {}): Promise<Publ
 }
 
 export async function getProperty(slug: string): Promise<PublicProperty | null> {
-  const properties = await getProperties()
-  return properties.find((property) => property.slug === slug) || null
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'properties',
+      depth: 2,
+      limit: 1,
+      where: { slug: { equals: slug } }
+    })
+    if (!result.docs.length) return null
+    const doc = result.docs[0] as any
+    return {
+      ...doc,
+      id: doc.id,
+      mainImageUrl: mediaUrl(doc.mainImage, fallbackProperties[0].mainImageUrl),
+      galleryUrls: Array.isArray(doc.gallery)
+        ? doc.gallery.map((item: any) => mediaUrl(item.image)).filter(Boolean)
+        : []
+    }
+  } catch {
+    return fallbackProperties.find((p) => p.slug === slug) || null
+  }
 }

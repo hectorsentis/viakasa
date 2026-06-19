@@ -2,11 +2,27 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { Check } from 'lucide-react'
 
-export const metadata: Metadata = { title: 'Nosotros' }
+import { breadcrumbJsonLd, jsonLdScript, pageMetadata } from '@/src/lib/seo'
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Nosotros',
+  description:
+    'Conoce Viakasa, asesoría inmobiliaria cercana y rigurosa para comprar, vender y gestionar viviendas en Madrid, Tenerife y toda España.',
+  path: '/nosotros'
+})
 
 export default function AboutPage() {
   return (
     <section className="section">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: 'Inicio', path: '/' },
+            { name: 'Nosotros', path: '/nosotros' }
+          ])
+        )}
+      />
       <div className="container about-grid">
         <Image
           className="about-image"

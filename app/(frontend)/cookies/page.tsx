@@ -1,3 +1,13 @@
+import type { Metadata } from 'next'
+
+import { pageMetadata } from '@/src/lib/seo'
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Política de cookies',
+  description: 'Política de cookies de Viakasa.',
+  path: '/cookies'
+})
+
 export default function CookiesPage() {
   return (
     <article className="legal-card">

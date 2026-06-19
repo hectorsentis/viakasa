@@ -8,6 +8,11 @@ type ContactState = {
 }
 
 export async function submitLead(_state: ContactState, formData: FormData): Promise<ContactState> {
+  const honeypot = String(formData.get('website') || '').trim()
+  if (honeypot) {
+    return { ok: true, message: 'Solicitud enviada. Te contactaremos en menos de 24 horas.' }
+  }
+
   const name = String(formData.get('name') || '').trim()
   const email = String(formData.get('email') || '').trim()
   const phone = String(formData.get('phone') || '').trim()
@@ -29,7 +34,7 @@ export async function submitLead(_state: ContactState, formData: FormData): Prom
         phone,
         interest,
         message,
-        property: property || undefined,
+        property: property ? Number(property) : undefined,
         source: property ? 'property' : 'contact'
       }
     })

@@ -35,9 +35,9 @@ El sitio público estará en `/` y la administración en `/admin`.
 ## Despliegue en Vercel
 
 - Conecta el repositorio a Vercel.
-- Usa PostgreSQL gestionado, por ejemplo Neon, Supabase Postgres o Vercel Postgres, y define `DATABASE_URL`.
+- Usa Supabase Postgres o Vercel Postgres. La app leerá `DATABASE_URL` primero y, si no existe, `POSTGRES_URL_NON_POOLING`, `POSTGRES_URL` o `POSTGRES_PRISMA_URL`. Para Supabase local/Vercel, deja `POSTGRES_SSL_REJECT_UNAUTHORIZED=false`.
 - Define un `PAYLOAD_SECRET` largo y único.
-- Configura Cloudinary con `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` y `CLOUDINARY_FOLDER`.
+- Configura Vercel Blob con `BLOB_READ_WRITE_TOKEN`. Si conectas Blob desde Vercel, esta variable se añadirá automáticamente al proyecto.
 - Elige email más adelante:
   - SMTP para IONOS o Gmail: `EMAIL_PROVIDER=smtp`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE`.
   - Resend: `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`.
@@ -49,3 +49,7 @@ El sitio público estará en `/` y la administración en `/admin`.
 Payload permite editar propiedades, servicios, páginas, ajustes del sitio y solicitudes recibidas. La creación de usuarios es invite-only: solo un usuario con rol `owner` puede crear otros usuarios. Los editores pueden gestionar contenido y propiedades.
 
 El material original del sistema de diseño está archivado en `docs/design-system`.
+
+## Almacenamiento
+
+Las imágenes subidas desde Payload se publican en Vercel Blob cuando `BLOB_READ_WRITE_TOKEN` está configurado. Payload conserva también el archivo local en desarrollo para que la administración siga siendo cómoda mientras se trabaja sin servicios externos.

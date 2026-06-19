@@ -6,6 +6,7 @@ import { getProperties, getServices, getSiteSettings } from '@/src/lib/content'
 import { ContactForm } from '@/src/ui/ContactForm'
 import { PropertyCard } from '@/src/ui/PropertyCard'
 import { ServiceCard } from '@/src/ui/ServiceCard'
+import { breadcrumbJsonLd, jsonLdScript } from '@/src/lib/seo'
 
 export default async function HomePage() {
   const [settings, services, properties] = await Promise.all([
@@ -16,6 +17,12 @@ export default async function HomePage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([{ name: 'Inicio', path: '/' }])
+        )}
+      />
       <section className="hero">
         <Image
           className="hero-image"

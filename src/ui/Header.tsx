@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import type { PublicSettings } from '@/src/lib/content'
+import { MobileMenuToggle } from './MobileMenuToggle'
 
 export function Header({ settings }: { settings: PublicSettings }) {
   return (
@@ -20,6 +21,7 @@ export function Header({ settings }: { settings: PublicSettings }) {
             {settings.secondaryCta}
           </Link>
         </nav>
+        <MobileMenuToggle ctaLabel={settings.secondaryCta} />
       </div>
     </header>
   )

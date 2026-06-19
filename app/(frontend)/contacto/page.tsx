@@ -2,14 +2,29 @@ import type { Metadata } from 'next'
 import { Mail, MapPin, Phone } from 'lucide-react'
 
 import { getSiteSettings } from '@/src/lib/content'
+import { breadcrumbJsonLd, jsonLdScript, pageMetadata } from '@/src/lib/seo'
 import { ContactForm } from '@/src/ui/ContactForm'
 
-export const metadata: Metadata = { title: 'Contacto' }
+export const metadata: Metadata = pageMetadata({
+  title: 'Contacto',
+  description:
+    'Contacta con Viakasa para comprar, vender, valorar o gestionar una vivienda en Madrid, Tenerife o cualquier punto de España.',
+  path: '/contacto'
+})
 
 export default async function ContactPage() {
   const settings = await getSiteSettings()
   return (
     <section className="section" style={{ background: 'var(--navy-900)' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbJsonLd([
+            { name: 'Inicio', path: '/' },
+            { name: 'Contacto', path: '/contacto' }
+          ])
+        )}
+      />
       <div className="container contact-grid">
         <div>
           <span className="eyebrow">Contacto</span>

@@ -38,7 +38,7 @@ export function Footer({ settings }: { settings: PublicSettings }) {
         </div>
       </div>
       <div className="footer-bottom">
-        <div className="container">© 2026 Viakasa Asesoría Inmobiliaria. Todos los derechos reservados.</div>
+        <div className="container">© {new Date().getFullYear()} Viakasa Asesoría Inmobiliaria. Todos los derechos reservados.</div>
       </div>
     </footer>
   )
