@@ -1,0 +1,52 @@
+/* ── Viakasa · Spacing, radii, shadows, layout ───────────────────────────
+   Generous, calm spacing. Soft but present shadows. Restrained radii —
+   formal real estate, not playful. */
+
+:root {
+  /* Spacing — 4px base */
+  --space-0:  0;
+  --space-1:  0.25rem;  /* 4  */
+  --space-2:  0.5rem;   /* 8  */
+  --space-3:  0.75rem;  /* 12 */
+  --space-4:  1rem;     /* 16 */
+  --space-5:  1.5rem;   /* 24 */
+  --space-6:  2rem;     /* 32 */
+  --space-7:  2.5rem;   /* 40 */
+  --space-8:  3rem;     /* 48 */
+  --space-9:  4rem;     /* 64 */
+  --space-10: 5rem;     /* 80 */
+  --space-12: 7rem;     /* 112 */
+
+  /* Radii — modest. Cards 6px, controls 4px, pills full. */
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   10px;
+  --radius-xl:   16px;
+  --radius-pill: 999px;
+
+  /* Shadows — cool navy-tinted, soft. Premium, never heavy. */
+  --shadow-xs:  0 1px 2px rgba(15, 33, 56, 0.06);
+  --shadow-sm:  0 1px 3px rgba(15, 33, 56, 0.08), 0 1px 2px rgba(15, 33, 56, 0.05);
+  --shadow-md:  0 6px 16px rgba(15, 33, 56, 0.08), 0 2px 6px rgba(15, 33, 56, 0.05);
+  --shadow-lg:  0 18px 40px rgba(15, 33, 56, 0.12), 0 6px 14px rgba(15, 33, 56, 0.06);
+  --shadow-xl:  0 32px 64px rgba(15, 33, 56, 0.18);
+  --shadow-gold: 0 8px 22px rgba(193, 154, 75, 0.28);
+
+  /* Borders & rings */
+  --border-width: 1px;
+  --hairline: 1px solid var(--border-subtle);
+
+  /* Motion — calm, confident easing. No bounce. */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1); /* @kind other */
+  --dur-fast:   140ms; /* @kind other */
+  --dur-normal: 240ms; /* @kind other */
+  --dur-slow:   420ms; /* @kind other */
+
+  /* Layout */
+  --container:    1200px;
+  --container-wide: 1360px;
+  --container-narrow: 760px;
+  --header-height: 76px;
+}

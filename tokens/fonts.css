@@ -1,0 +1,12 @@
+/* Viakasa webfonts
+   ─────────────────────────────────────────────
+   The brand wordmark is a wide geometric sans with a flat-apex "A".
+   League Spartan is the closest free match and is used as the BRAND face
+   (eyebrows, uppercase labels, stat numerals, wordmark-style display).
+   Lora — warm, formal transitional serif for editorial headings (confidence).
+   Mulish — clean humanist sans for body & UI (echoes the tagline's softness).
+
+   NOTE (font substitution): we do not have the exact brand font file, so
+   League Spartan substitutes for the wordmark face. Flagged to the user. */
+
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Mulish:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');

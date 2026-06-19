@@ -1,0 +1,50 @@
+<!-- @dsCard group="Components" viewport="700x480" name="Property card" subtitle="The signature listing card with status & feature row" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body{margin:0;background:var(--paper);font-family:var(--font-sans);padding:24px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+  i[data-lucide]{width:16px;height:16px}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+</head><body>
+<div id="root"></div>
+<script type="text/babel">
+  const { PropertyCard } = window.ViakasaDesignSystem_53b05d;
+  const Ico = ({n}) => <i data-lucide={n}></i>;
+  const feats = [
+    { icon:<Ico n="bed-double"/>, value:'3', label:'Hab.' },
+    { icon:<Ico n="bath"/>, value:'2', label:'Baños' },
+    { icon:<Ico n="maximize-2"/>, value:'95 m²', label:'Sup.' },
+  ];
+  function Demo(){
+    return (
+      <div style={{display:'flex',gap:24,flexWrap:'wrap',justifyContent:'center'}}>
+        <div style={{width:320}}>
+          <PropertyCard
+            image="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
+            status="En venta" statusVariant="success"
+            location="Salamanca · Madrid"
+            title="Piso reformado con terraza"
+            price="485.000 €" priceNote="· 5.105 €/m²"
+            features={feats}/>
+        </div>
+        <div style={{width:320}}>
+          <PropertyCard
+            image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80"
+            status="Destacado" statusVariant="gold"
+            location="Costa Adeje · Tenerife"
+            title="Villa con vistas al océano"
+            price="1.250.000 €"
+            features={feats}/>
+        </div>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+  setTimeout(()=>window.lucide&&window.lucide.createIcons(),60);
+</script>
+</body></html>

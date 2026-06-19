@@ -1,0 +1,14 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Semantic status" subtitle="Success, warning, danger, info — muted to stay formal" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;background:var(--paper);font-family:var(--font-sans);padding:18px;display:flex;gap:14px}
+  .chip{flex:1;border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--gray-200)}
+  .chip .solid{height:46px}
+  .chip .soft{height:34px;display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:600}
+  .chip .name{font-family:var(--font-brand);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;color:var(--gray-600);background:#fff}
+</style></head><body>
+  <div class="chip"><div class="solid" style="background:var(--success)"></div><div class="soft" style="background:var(--success-bg);color:var(--success)">Vendido / OK</div><div class="name">Success</div></div>
+  <div class="chip"><div class="solid" style="background:var(--warning)"></div><div class="soft" style="background:var(--warning-bg);color:var(--warning)">Pendiente</div><div class="name">Warning</div></div>
+  <div class="chip"><div class="solid" style="background:var(--danger)"></div><div class="soft" style="background:var(--danger-bg);color:var(--danger)">Retirado</div><div class="name">Danger</div></div>
+  <div class="chip"><div class="solid" style="background:var(--info)"></div><div class="soft" style="background:var(--info-bg);color:var(--navy-700)">Información</div><div class="name">Info</div></div>
+</body></html>

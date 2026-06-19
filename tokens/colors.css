@@ -1,0 +1,80 @@
+/* ── Viakasa · Color tokens ──────────────────────────────────────────────
+   Two-pillar brand: warm GOLD (luxury, value) + deep NAVY (trust, formality),
+   set on warm ivory paper. Restrained, formal, confident. */
+
+:root {
+  /* Gold — brand primary. 500 is the wordmark gold. */
+  --gold-900: #6E561F;
+  --gold-800: #8A6E2C;
+  --gold-700: #A07E38;
+  --gold-600: #B08C40;
+  --gold-500: #C19A4B; /* ← brand gold */
+  --gold-400: #CCA854;
+  --gold-300: #D9B567;
+  --gold-200: #E7CE93;
+  --gold-100: #F1E2BE;
+  --gold-50:  #F8F0DC;
+
+  /* Navy — brand secondary / formal backgrounds. 800 is the brand navy. */
+  --navy-950: #0A1626;
+  --navy-900: #0C1A2E;
+  --navy-800: #0F2138; /* ← brand navy */
+  --navy-700: #163152;
+  --navy-600: #21456B;
+  --navy-500: #2F5680;
+  --navy-400: #5777A0;
+  --navy-300: #8AA2BE;
+  --navy-200: #BFCEDD;
+  --navy-100: #E2E9F0;
+
+  /* Neutrals — warm ivory paper, cool-ink text */
+  --ink:        #14202E;
+  --ink-soft:   #34465A;
+  --paper:      #FAF8F3;
+  --paper-warm: #F4EFE6;
+  --white:      #FFFFFF;
+  --gray-700:   #51606E;
+  --gray-500:   #7A8794;
+  --gray-400:   #9AA6B2;
+  --gray-300:   #C7CFD7;
+  --gray-200:   #E3E8ED;
+  --gray-100:   #EFF2F5;
+
+  /* Semantic status */
+  --success: #2E7D52;
+  --success-bg: #E4F0E9;
+  --warning: #B6851F;
+  --warning-bg: #F8EFD6;
+  --danger:  #B23A33;
+  --danger-bg: #F6E3E1;
+  --info:    var(--navy-600);
+  --info-bg: var(--navy-100);
+
+  /* ── Semantic aliases ── */
+  --color-primary:        var(--navy-800);
+  --color-primary-hover:  var(--navy-700);
+  --color-accent:         var(--gold-500);
+  --color-accent-hover:   var(--gold-600);
+  --color-accent-soft:    var(--gold-100);
+
+  --text-heading:   var(--navy-800);
+  --text-body:      var(--ink);
+  --text-muted:     var(--gray-500);
+  --text-on-navy:   #F3F1EB;
+  --text-on-navy-muted: var(--navy-300);
+  --text-on-gold:   var(--navy-900);
+  --text-link:      var(--gold-700);
+
+  --surface-page:   var(--paper);
+  --surface-card:   var(--white);
+  --surface-sunken: var(--paper-warm);
+  --surface-navy:   var(--navy-800);
+  --surface-navy-deep: var(--navy-900);
+
+  --border-subtle:  var(--gray-200);
+  --border-default: var(--gray-300);
+  --border-strong:  var(--navy-200);
+  --border-gold:    var(--gold-300);
+
+  --focus-ring:     color-mix(in srgb, var(--gold-500) 55%, transparent);
+}

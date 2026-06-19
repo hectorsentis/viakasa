@@ -1,0 +1,101 @@
+<!-- @dsCard group="Website" viewport="1280x720" name="Viakasa — Marketing website" subtitle="Interactive homepage → property detail prototype" -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viakasa · Asesoría Inmobiliaria</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html, body { margin: 0; height: 100%; }
+  #vk-scroll { height: 100vh; overflow-y: auto; scroll-behavior: smooth; background: var(--paper); }
+  .vk-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(120%);
+    background: var(--navy-800); color: #fff; padding: 14px 24px; border-radius: 8px;
+    box-shadow: var(--shadow-xl); font-family: var(--font-sans); font-size: 14px; z-index: 100;
+    display: flex; align-items: center; gap: 10px; opacity: 0;
+    transition: transform var(--dur-normal) var(--ease-out), opacity var(--dur-normal);
+  }
+  .vk-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .vk-toast i { color: var(--gold-400); }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<script src="data.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<div class="vk-toast" id="vk-toast"><i data-lucide="check-circle" style="width:18px;height:18px"></i><span>¡Gracias! Te contactaremos en menos de 24 h.</span></div>
+
+<script type="text/babel" src="Chrome.jsx"></script>
+<script type="text/babel" src="Home.jsx"></script>
+<script type="text/babel" src="PropertyDetail.jsx"></script>
+<script type="text/babel">
+  const { useState } = React;
+
+  function showToast() {
+    const t = document.getElementById('vk-toast');
+    t.classList.add('show');
+    clearTimeout(window.__vkt);
+    window.__vkt = setTimeout(() => t.classList.remove('show'), 3200);
+    setTimeout(() => window.lucide && window.lucide.createIcons(), 30);
+  }
+
+  function App() {
+    const [view, setView] = useState('home');     // 'home' | 'detail'
+    const [activeId, setActiveId] = useState(null);
+    const [active, setActive] = useState('inicio');
+    const listings = window.VK_LISTINGS;
+
+    const openDetail = (id) => {
+      setActiveId(id); setView('detail');
+      document.getElementById('vk-scroll').scrollTo({ top: 0 });
+    };
+    const goHome = () => { setView('home'); document.getElementById('vk-scroll').scrollTo({ top: 0 }); };
+
+    const navTo = (id) => {
+      if (view === 'detail') { setView('home'); setTimeout(() => scrollTo(id), 60); }
+      else scrollTo(id);
+    };
+    const scrollTo = (id) => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      setActive(id);
+    };
+
+    React.useEffect(() => { setTimeout(() => window.lucide && window.lucide.createIcons(), 50); });
+
+    return (
+      <React.Fragment>
+        <Header onNav={navTo} onLogo={goHome} active={active} />
+        {view === 'home' ? (
+          <React.Fragment>
+            <Hero onNav={navTo} />
+            <TrustStrip />
+            <Services />
+            <Listings listings={listings} onOpen={openDetail} />
+            <About />
+            <Contact onToast={showToast} />
+          </React.Fragment>
+        ) : (
+          <PropertyDetail listing={listings.find(l => l.id === activeId)} onBack={goHome} onToast={showToast} />
+        )}
+        <Footer onNav={navTo} />
+      </React.Fragment>
+    );
+  }
+
+  // mount the scroll container then app
+  const scrollEl = document.createElement('div');
+  scrollEl.id = 'vk-scroll';
+  document.getElementById('root').appendChild(scrollEl);
+  const mount = document.createElement('div');
+  scrollEl.appendChild(mount);
+  ReactDOM.createRoot(mount).render(<App />);
+  setTimeout(() => window.lucide && window.lucide.createIcons(), 120);
+</script>
+</body>
+</html>
