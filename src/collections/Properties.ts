@@ -80,8 +80,15 @@ export const Properties: CollectionConfig = {
       name: 'mainImage',
       type: 'relationship',
       label: 'Imagen principal',
-      relationTo: 'media',
-      required: true
+      relationTo: 'media'
+    },
+    {
+      name: 'externalImageUrl',
+      type: 'text',
+      label: 'URL externa de imagen',
+      admin: {
+        description: 'Útil para importar contenido inicial antes de subir imágenes a Vercel Blob.'
+      }
     },
     {
       name: 'gallery',

@@ -40,7 +40,7 @@ export async function getProperties({ featuredOnly = false } = {}): Promise<Publ
     return result.docs.map((doc: any) => ({
       ...doc,
       id: doc.id,
-      mainImageUrl: mediaUrl(doc.mainImage, fallbackProperties[0].mainImageUrl),
+      mainImageUrl: mediaUrl(doc.mainImage, doc.externalImageUrl || fallbackProperties[0].mainImageUrl),
       galleryUrls: Array.isArray(doc.gallery)
         ? doc.gallery.map((item: any) => mediaUrl(item.image)).filter(Boolean)
         : []

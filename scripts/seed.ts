@@ -1,10 +1,14 @@
-import configPromise from '@payload-config'
+import nextEnv from '@next/env'
 import { getPayload } from 'payload'
 
 import { fallbackProperties, fallbackServices, fallbackSettings } from '../src/data/fallback'
 import { slugify } from '../src/utils/slugify'
 
+const { loadEnvConfig } = nextEnv
+loadEnvConfig(process.cwd())
+
 async function main() {
+  const { default: configPromise } = await import('@payload-config')
   const payload = await getPayload({ config: configPromise })
   const email = process.env.INITIAL_ADMIN_EMAIL
   const password = process.env.INITIAL_ADMIN_PASSWORD
@@ -40,15 +44,6 @@ async function main() {
     const existing = await payload.find({ collection: 'properties', where: { slug: { equals: property.slug } }, limit: 1 })
     if (existing.docs.length) continue
 
-    const media = await payload.create({
-      collection: 'media',
-      data: {
-        alt: property.title,
-        blobUrl: property.mainImageUrl
-      },
-      overrideAccess: true
-    })
-
     await payload.create({
       collection: 'properties',
       data: {
@@ -68,8 +63,8 @@ async function main() {
         year: property.year,
         description: property.description,
         features: property.features,
-        mainImage: media.id,
-        gallery: [{ image: media.id }],
+        externalImageUrl: property.mainImageUrl,
+        gallery: [],
         seo: {
           title: property.title,
           description: property.description
