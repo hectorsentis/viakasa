@@ -1,5 +1,7 @@
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
+// No se importa `@payload-config` a nivel de módulo a propósito: si buildConfig
+// falla (por ejemplo, sin PAYLOAD_SECRET o con una URL de base mal formada) el
+// import revienta al cargar el módulo y la ruta devuelve un 500 en HTML, justo
+// cuando más falta hace el diagnóstico. Se carga dentro del try.
 
 export const dynamic = 'force-dynamic'
 
@@ -37,8 +39,14 @@ export async function GET() {
     }
   }
 
+  let stage = 'load-config'
+
   try {
+    const { default: configPromise } = await import('@payload-config')
+    stage = 'get-payload'
+    const { getPayload } = await import('payload')
     const payload = await getPayload({ config: configPromise })
+    stage = 'query'
     const users = await payload.count({ collection: 'users' })
     checks.ok = true
     checks.payload = {
@@ -49,6 +57,8 @@ export async function GET() {
   } catch (error) {
     checks.payload = {
       initialized: false,
+      // `stage` distingue una config que no llega a construirse de un fallo de conexión.
+      failedAt: stage,
       error: error instanceof Error ? error.message : 'Unknown error'
     }
     return Response.json(checks, { status: 500 })

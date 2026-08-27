@@ -40,9 +40,18 @@ function resolveDatabaseUrl() {
   if (selected.includes('127.0.0.1') || selected.includes('localhost')) return selected
   if (process.env.POSTGRES_SSL_REJECT_UNAUTHORIZED === 'true') return selected
 
-  const url = new URL(selected)
-  url.searchParams.set('sslmode', 'no-verify')
-  return url.toString()
+  try {
+    const url = new URL(selected)
+    // pg trata `sslmode=require` como `verify-full` desde pg-connection-string v3,
+    // y el certificado de Supabase es autofirmado para el cliente.
+    url.searchParams.set('sslmode', 'no-verify')
+    return url.toString()
+  } catch {
+    // `new URL` lanza con una cadena mal formada; si esto ocurre a nivel de módulo
+    // tumba cualquier ruta que importe la config con un 500 en HTML. Se devuelve
+    // tal cual y que falle la conexión, que sí es un error legible.
+    return selected
+  }
 }
 
 function resolvePostgresSsl() {
