@@ -26,10 +26,11 @@ export default function AboutPage() {
       <div className="container about-grid">
         <Image
           className="about-image"
-          src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1100&q=82"
+          src="/assets/nosotros.png"
           alt="Equipo Viakasa en una reunión de asesoramiento"
           width={900}
-          height={620}
+          height={600}
+          priority
         />
         <div>
           <span className="eyebrow">Nosotros</span>

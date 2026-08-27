@@ -94,6 +94,13 @@ export default buildConfig({
   },
   collections: [Users, Media, Properties, Services, Pages, SiteSettings, Leads],
   db: postgresAdapter({
+    migrationDir: path.resolve(dirname, 'src/migrations'),
+    // Las migraciones son la única fuente de verdad del esquema. Con push activo,
+    // `next dev` sincroniza cambios directamente contra la base —que aquí es la de
+    // producción— y reinserta el marcador 'dev' en payload_migrations, lo que hace
+    // que `migrate` aborte sin avisar en un build sin TTY como el de Vercel.
+    // Tras tocar colecciones: `npm run migrate create <nombre>` y `npm run migrate up`.
+    push: false,
     pool: {
       connectionString: resolveDatabaseUrl(),
       ssl: resolvePostgresSsl()

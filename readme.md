@@ -18,13 +18,19 @@ cp .env.example .env.local
 
 3. Configura `DATABASE_URL`, `PAYLOAD_SECRET`, `INITIAL_ADMIN_EMAIL` e `INITIAL_ADMIN_PASSWORD`.
 
-4. Crea datos iniciales:
+4. Aplica el esquema de base de datos:
+
+```bash
+npm run migrate up
+```
+
+5. Crea datos iniciales:
 
 ```bash
 npm run seed
 ```
 
-5. Arranca el proyecto:
+6. Arranca el proyecto:
 
 ```bash
 npm run dev
@@ -43,6 +49,18 @@ El sitio público estará en `/` y la administración en `/admin`.
   - Resend: `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`.
 - Define `CONTACT_TO_EMAIL` para recibir avisos de solicitudes.
 - Ejecuta `npm run seed` una vez contra producción para crear el propietario inicial.
+
+## Migraciones
+
+El esquema vive en `src/migrations`. `npm run build` ejecuta `npm run migrate up` antes de compilar, así que cada despliegue aplica las migraciones pendientes.
+
+```bash
+npm run migrate create <nombre>   # genera una migración tras cambiar colecciones
+npm run migrate up                # aplica las pendientes
+npm run migrate status            # lista el estado
+```
+
+Usa `npm run migrate` en lugar del binario `payload`: en Windows su cargador de tsx no resuelve los builtins `node:*` y `payload migrate:create` falla.
 
 ## Contenido
 
