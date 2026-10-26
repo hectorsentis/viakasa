@@ -41,8 +41,10 @@ export const Properties: CollectionConfig = {
     },
     { name: 'featured', type: 'checkbox', label: 'Destacada' },
     { name: 'title', type: 'text', label: 'Título', required: true },
+    { name: 'titleEn', type: 'text', label: 'Title (English)' },
     { name: 'slug', type: 'text', label: 'Slug', required: true, unique: true },
     { name: 'location', type: 'text', label: 'Zona y ubicación', required: true },
+    { name: 'locationEn', type: 'text', label: 'Area and location (English)' },
     {
       name: 'city',
       type: 'select',
@@ -52,6 +54,7 @@ export const Properties: CollectionConfig = {
     },
     { name: 'price', type: 'number', label: 'Precio', min: 0 },
     { name: 'priceNote', type: 'text', label: 'Nota de precio' },
+    { name: 'priceNoteEn', type: 'text', label: 'Price note (English)' },
     {
       name: 'operation',
       type: 'select',
@@ -65,16 +68,21 @@ export const Properties: CollectionConfig = {
       ]
     },
     { name: 'propertyType', type: 'text', label: 'Tipo de inmueble', required: true },
+    { name: 'propertyTypeEn', type: 'text', label: 'Property type (English)' },
     { name: 'rooms', type: 'number', label: 'Habitaciones', min: 0 },
     { name: 'bathrooms', type: 'number', label: 'Baños', min: 0 },
     { name: 'area', type: 'number', label: 'Superficie en m²', min: 0 },
     { name: 'year', type: 'number', label: 'Año', min: 1800 },
     { name: 'description', type: 'textarea', label: 'Descripción', required: true },
+    { name: 'descriptionEn', type: 'textarea', label: 'Description (English)' },
     {
       name: 'features',
       type: 'array',
       label: 'Características',
-      fields: [{ name: 'label', type: 'text', label: 'Característica', required: true }]
+      fields: [
+        { name: 'label', type: 'text', label: 'Característica', required: true },
+        { name: 'labelEn', type: 'text', label: 'Feature (English)' }
+      ]
     },
     {
       name: 'mainImage',
@@ -110,7 +118,9 @@ export const Properties: CollectionConfig = {
       label: 'SEO',
       fields: [
         { name: 'title', type: 'text', label: 'Título SEO' },
-        { name: 'description', type: 'textarea', label: 'Descripción SEO' }
+        { name: 'titleEn', type: 'text', label: 'SEO title (English)' },
+        { name: 'description', type: 'textarea', label: 'Descripción SEO' },
+        { name: 'descriptionEn', type: 'textarea', label: 'SEO description (English)' }
       ]
     }
   ]

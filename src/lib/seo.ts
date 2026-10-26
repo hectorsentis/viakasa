@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import type { PublicProperty, PublicSettings } from '@/src/lib/content'
 import { formatPrice, operationLabel } from '@/src/lib/format'
+import { translatePath } from '@/src/i18n'
 
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.viakasa.es').replace(/\/$/, '')
 
@@ -45,7 +46,10 @@ export function pageMetadata({
     title,
     description,
     keywords: defaultSeo.keywords,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: { 'es-ES': url, 'en-GB': absoluteUrl(translatePath(path, 'en')) }
+    },
     openGraph: {
       title,
       description,

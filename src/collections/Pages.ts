@@ -40,8 +40,11 @@ export const Pages: CollectionConfig = {
       ]
     },
     { name: 'title', type: 'text', label: 'Título', required: true },
+    { name: 'titleEn', type: 'text', label: 'Title (English)' },
     { name: 'slug', type: 'text', label: 'Slug', required: true, unique: true },
     { name: 'summary', type: 'textarea', label: 'Resumen' },
-    { name: 'content', type: 'richText', label: 'Contenido' }
+    { name: 'summaryEn', type: 'textarea', label: 'Summary (English)' },
+    { name: 'content', type: 'richText', label: 'Contenido' },
+    { name: 'contentEn', type: 'richText', label: 'Content (English)' }
   ]
 }

@@ -13,7 +13,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl('/contacto'), lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: absoluteUrl('/aviso-legal'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
     { url: absoluteUrl('/privacidad'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
-    { url: absoluteUrl('/cookies'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 }
+    { url: absoluteUrl('/cookies'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    { url: absoluteUrl('/en'), lastModified: now, changeFrequency: 'weekly', priority: 1 },
+    { url: absoluteUrl('/en/properties'), lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: absoluteUrl('/en/services'), lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: absoluteUrl('/en/about'), lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: absoluteUrl('/en/contact'), lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: absoluteUrl('/en/legal-notice'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    { url: absoluteUrl('/en/privacy'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    { url: absoluteUrl('/en/cookies'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 }
   ]
 
   const properties = await getProperties()
@@ -24,5 +32,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: property.featured ? 0.85 : 0.75
   }))
 
-  return [...staticRoutes, ...propertyRoutes]
+  const englishPropertyRoutes: MetadataRoute.Sitemap = properties.map((property) => ({
+    url: absoluteUrl(`/en/properties/${property.slug}`),
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: property.featured ? 0.85 : 0.75
+  }))
+
+  return [...staticRoutes, ...propertyRoutes, ...englishPropertyRoutes]
 }

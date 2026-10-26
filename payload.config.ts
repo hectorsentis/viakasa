@@ -4,6 +4,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
@@ -102,6 +103,14 @@ export default buildConfig({
     }
   },
   collections: [Users, Media, Properties, Services, Pages, SiteSettings, Leads],
+  plugins: [
+    vercelBlobStorage({
+      collections: { media: { prefix: 'propiedades' } },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      addRandomSuffix: true,
+      clientUploads: true
+    })
+  ],
   db: postgresAdapter({
     migrationDir: path.resolve(dirname, 'src/migrations'),
     // Las migraciones son la única fuente de verdad del esquema. Con push activo,

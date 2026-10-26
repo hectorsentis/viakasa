@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   category: 'Real estate',
   alternates: {
     canonical: siteUrl,
-    languages: { 'es-ES': siteUrl }
+    languages: { 'es-ES': siteUrl, 'en-GB': `${siteUrl}/en` }
   },
   robots: {
     index: true,

@@ -81,8 +81,8 @@ export default async function HomePage() {
         <div className="container about-grid">
           <Image
             className="about-image"
-            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1100&q=82"
-            alt="Equipo de asesoría inmobiliaria"
+            src="/assets/about-interior.png"
+            alt="Interior contemporáneo y luminoso de una vivienda española"
             width={900}
             height={620}
           />

@@ -26,8 +26,8 @@ export default function AboutPage() {
       <div className="container about-grid">
         <Image
           className="about-image"
-          src="/assets/nosotros.png"
-          alt="Equipo Viakasa en una reunión de asesoramiento"
+          src="/assets/about-interior.png"
+          alt="Interior contemporáneo y luminoso de una vivienda española"
           width={900}
           height={600}
           priority

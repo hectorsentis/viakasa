@@ -8,9 +8,10 @@ type ContactState = {
 }
 
 export async function submitLead(_state: ContactState, formData: FormData): Promise<ContactState> {
+  const en = formData.get('locale') === 'en'
   const honeypot = String(formData.get('website') || '').trim()
   if (honeypot) {
-    return { ok: true, message: 'Solicitud enviada. Te contactaremos en menos de 24 horas.' }
+    return { ok: true, message: en ? 'Request sent. We will contact you within 24 hours.' : 'Solicitud enviada. Te contactaremos en menos de 24 horas.' }
   }
 
   const name = String(formData.get('name') || '').trim()
@@ -21,7 +22,7 @@ export async function submitLead(_state: ContactState, formData: FormData): Prom
   const property = String(formData.get('property') || '').trim()
 
   if (!name || !email) {
-    return { ok: false, message: 'Indica tu nombre y email para que podamos contactar contigo.' }
+    return { ok: false, message: en ? 'Please provide your name and email so we can contact you.' : 'Indica tu nombre y email para que podamos contactar contigo.' }
   }
 
   try {
@@ -38,11 +39,11 @@ export async function submitLead(_state: ContactState, formData: FormData): Prom
         source: property ? 'property' : 'contact'
       }
     })
-    return { ok: true, message: 'Solicitud enviada. Te contactaremos en menos de 24 horas.' }
+    return { ok: true, message: en ? 'Request sent. We will contact you within 24 hours.' : 'Solicitud enviada. Te contactaremos en menos de 24 horas.' }
   } catch {
     return {
       ok: false,
-      message: 'No hemos podido enviar la solicitud ahora mismo. Llámanos o escríbenos por email y te atenderemos enseguida.'
+      message: en ? 'We could not send your request just now. Please call or email us and we will help right away.' : 'No hemos podido enviar la solicitud ahora mismo. Llámanos o escríbenos por email y te atenderemos enseguida.'
     }
   }
 }

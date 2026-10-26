@@ -20,7 +20,9 @@ export const Services: CollectionConfig = {
   },
   fields: [
     { name: 'title', type: 'text', label: 'Título', required: true },
+    { name: 'titleEn', type: 'text', label: 'Title (English)' },
     { name: 'description', type: 'textarea', label: 'Descripción', required: true },
+    { name: 'descriptionEn', type: 'textarea', label: 'Description (English)' },
     { name: 'icon', type: 'text', label: 'Icono Lucide', defaultValue: 'home', required: true },
     { name: 'order', type: 'number', label: 'Orden', defaultValue: 0 },
     { name: 'highlighted', type: 'checkbox', label: 'Destacar' }

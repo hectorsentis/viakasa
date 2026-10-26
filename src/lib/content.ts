@@ -1,32 +1,42 @@
 import { fallbackProperties, fallbackServices, fallbackSettings } from '@/src/data/fallback'
 import { mediaUrl } from '@/src/lib/format'
 import { getPayloadClient } from '@/src/lib/payload'
+import { localized, type Locale } from '@/src/i18n'
 
 export type PublicProperty = (typeof fallbackProperties)[number]
 export type PublicSettings = typeof fallbackSettings
 
-export async function getSiteSettings(): Promise<PublicSettings> {
+function localizeProperty(doc: any, locale: Locale) {
+  const result = localized(doc, locale) as any
+  if (locale === 'en' && Array.isArray(result.features)) {
+    result.features = result.features.map((feature: any) => localized(feature, locale))
+  }
+  return result
+}
+
+export async function getSiteSettings(locale: Locale = 'es'): Promise<PublicSettings> {
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({ collection: 'site-settings', limit: 1 })
     const doc = result.docs[0] as Partial<PublicSettings> | undefined
-    return { ...fallbackSettings, ...doc }
+    return localized({ ...fallbackSettings, ...doc } as Record<string, unknown>, locale) as PublicSettings
   } catch {
-    return fallbackSettings
+    return localized(fallbackSettings as unknown as Record<string, unknown>, locale) as PublicSettings
   }
 }
 
-export async function getServices() {
+export async function getServices(locale: Locale = 'es') {
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({ collection: 'services', sort: 'order', limit: 20 })
-    return result.docs.length ? result.docs : fallbackServices
+    const docs = result.docs.length ? result.docs : fallbackServices
+    return docs.map((doc) => localized(doc as Record<string, unknown>, locale))
   } catch {
-    return fallbackServices
+    return fallbackServices.map((doc) => localized(doc as unknown as Record<string, unknown>, locale))
   }
 }
 
-export async function getProperties({ featuredOnly = false } = {}): Promise<PublicProperty[]> {
+export async function getProperties({ featuredOnly = false, locale = 'es' as Locale } = {}): Promise<PublicProperty[]> {
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({
@@ -37,20 +47,23 @@ export async function getProperties({ featuredOnly = false } = {}): Promise<Publ
       where: featuredOnly ? { featured: { equals: true } } : undefined
     })
     if (!result.docs.length) return fallbackProperties
-    return result.docs.map((doc: any) => ({
+    return result.docs.map((raw: any) => {
+      const doc = localizeProperty(raw, locale)
+      return ({
       ...doc,
       id: doc.id,
       mainImageUrl: mediaUrl(doc.mainImage, doc.externalImageUrl || fallbackProperties[0].mainImageUrl),
       galleryUrls: Array.isArray(doc.gallery)
         ? doc.gallery.map((item: any) => mediaUrl(item.image)).filter(Boolean)
         : []
-    }))
+      })
+    })
   } catch {
-    return fallbackProperties
+    return fallbackProperties.map((doc) => localizeProperty(doc, locale))
   }
 }
 
-export async function getProperty(slug: string): Promise<PublicProperty | null> {
+export async function getProperty(slug: string, locale: Locale = 'es'): Promise<PublicProperty | null> {
   try {
     const payload = await getPayloadClient()
     const result = await payload.find({
@@ -60,16 +73,17 @@ export async function getProperty(slug: string): Promise<PublicProperty | null> 
       where: { slug: { equals: slug } }
     })
     if (!result.docs.length) return null
-    const doc = result.docs[0] as any
+    const doc = localizeProperty(result.docs[0], locale)
     return {
       ...doc,
       id: doc.id,
-      mainImageUrl: mediaUrl(doc.mainImage, fallbackProperties[0].mainImageUrl),
+      mainImageUrl: mediaUrl(doc.mainImage, doc.externalImageUrl || fallbackProperties[0].mainImageUrl),
       galleryUrls: Array.isArray(doc.gallery)
         ? doc.gallery.map((item: any) => mediaUrl(item.image)).filter(Boolean)
         : []
     }
   } catch {
-    return fallbackProperties.find((p) => p.slug === slug) || null
+    const fallback = fallbackProperties.find((p) => p.slug === slug)
+    return fallback ? localizeProperty(fallback, locale) : null
   }
 }

@@ -181,6 +181,29 @@ select {
   gap: 28px;
 }
 
+.language-selector {
+  align-items: center;
+  display: inline-flex;
+  font-family: var(--font-brand);
+  font-size: 12px;
+  font-weight: 700;
+  gap: 5px;
+  letter-spacing: 0.08em;
+}
+
+.language-selector a {
+  color: var(--navy-200);
+  padding: 6px 2px;
+}
+
+.language-selector a[aria-current='page'] {
+  color: var(--gold-400);
+}
+
+.language-selector span {
+  color: var(--navy-400);
+}
+
 .nav-links a {
   color: rgba(250, 248, 243, 0.84);
   font-family: var(--font-brand);

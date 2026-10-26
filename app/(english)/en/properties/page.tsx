@@ -1,0 +1,6 @@
+import type { Metadata } from 'next'
+import { getProperties } from '@/src/lib/content'
+import { PropertyCard } from '@/src/ui/PropertyCard'
+
+export const metadata: Metadata = { title: 'Properties in Madrid, Tenerife and across Spain', description: 'Explore homes selected by Viakasa with legal and financial guidance included.', alternates: { canonical: '/en/properties', languages: { 'es-ES': '/propiedades', 'en-GB': '/en/properties' } } }
+export default async function PropertiesPage() { const properties = await getProperties({ locale: 'en' }); const cities = ['All', ...Array.from(new Set(properties.map((property) => property.city).filter(Boolean)))]; return <section className="section section-alt"><div className="container"><span className="eyebrow">Properties</span><h1 className="section-title">Homes selected with care</h1><p className="section-intro">We maintain a carefully chosen portfolio so every viewing is worthwhile. If you cannot find what you need, tell us and we will help.</p><div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 28 }}>{cities.map((city) => <span className="button button-outline" key={city}>{city}</span>)}</div><div className="grid-3">{properties.map((property) => <PropertyCard key={property.id} property={property} locale="en" />)}</div></div></section> }
