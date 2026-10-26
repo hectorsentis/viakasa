@@ -49,6 +49,7 @@ export const Leads: CollectionConfig = {
         try {
           await req.payload.sendEmail({
             to: process.env.CONTACT_TO_EMAIL,
+            replyTo: doc.email,
             subject: `Nueva solicitud de ${doc.name}`,
             text: [
               `Nombre: ${doc.name}`,
