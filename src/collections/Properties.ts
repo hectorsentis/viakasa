@@ -86,7 +86,7 @@ export const Properties: CollectionConfig = {
     },
     {
       name: 'mainImage',
-      type: 'relationship',
+      type: 'upload',
       label: 'Imagen principal',
       relationTo: 'media'
     },
@@ -105,7 +105,7 @@ export const Properties: CollectionConfig = {
       fields: [
         {
           name: 'image',
-          type: 'relationship',
+          type: 'upload',
           label: 'Imagen',
           relationTo: 'media',
           required: true

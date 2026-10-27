@@ -65,7 +65,7 @@ export default async function PropertyDetailPage({ params }: Props) {
               <span><Calendar size={17} color="var(--gold-600)" /><strong>{property.year || '-'}</strong> Año</span>
             </div>
             <h2 style={{ fontFamily: 'var(--font-serif)', marginTop: 34 }}>Descripción</h2>
-            <p className="section-intro">{property.description}</p>
+            <p className="section-intro property-description">{property.description}</p>
             <h2 style={{ fontFamily: 'var(--font-serif)', marginTop: 34 }}>Características</h2>
             <ul className="footer-list" style={{ color: 'var(--ink)', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
               {(property.features || []).map((feature) => (

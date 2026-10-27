@@ -493,6 +493,10 @@ select {
   font-size: 13px;
 }
 
+.property-description {
+  white-space: pre-line;
+}
+
 .features-row {
   border-top: 1px solid var(--border);
   display: grid;

@@ -37,7 +37,7 @@ export const SiteSettings: CollectionConfig = {
       label: 'Main text (English)',
       defaultValue: 'Complete property advisory for buying, selling, legal services and finance, with one trusted point of contact.'
     },
-    { name: 'heroImage', type: 'relationship', label: 'Imagen principal', relationTo: 'media' },
+    { name: 'heroImage', type: 'upload', label: 'Imagen principal', relationTo: 'media' },
     { name: 'phone', type: 'text', label: 'Teléfono', defaultValue: '600 123 450' },
     { name: 'email', type: 'email', label: 'Email', defaultValue: 'info@viakasa.es' },
     { name: 'offices', type: 'text', label: 'Sedes', defaultValue: 'Madrid · Santa Cruz de Tenerife' },

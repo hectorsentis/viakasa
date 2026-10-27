@@ -17,11 +17,7 @@ export const Media: CollectionConfig = {
   },
   upload: {
     staticDir: 'media',
-    mimeTypes: ['image/*'],
-    imageSizes: [
-      { name: 'card', width: 820, height: 560, position: 'centre' },
-      { name: 'hero', width: 1600, height: 980, position: 'centre' }
-    ]
+    mimeTypes: ['image/*']
   },
   fields: [
     { name: 'alt', type: 'text', label: 'Texto alternativo', required: true },
