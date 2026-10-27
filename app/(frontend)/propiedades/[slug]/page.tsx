@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Bath, BedDouble, Calendar, Check, Maximize2 } from 'lucide-react'
@@ -8,6 +7,7 @@ import { getProperty } from '@/src/lib/content'
 import { formatPrice, operationLabel } from '@/src/lib/format'
 import { breadcrumbJsonLd, jsonLdScript, pageMetadata, realEstateListingJsonLd } from '@/src/lib/seo'
 import { ContactForm } from '@/src/ui/ContactForm'
+import { PropertyGallery } from '@/src/ui/PropertyGallery'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -28,7 +28,7 @@ export default async function PropertyDetailPage({ params }: Props) {
   const property = await getProperty(slug)
   if (!property) notFound()
 
-  const gallery = property.galleryUrls?.length ? property.galleryUrls : [property.mainImageUrl]
+  const galleryImages = property.galleryImages || (property.galleryUrls || []).map((url) => ({ url, alt: property.title }))
 
   return (
     <section className="detail-hero">
@@ -45,14 +45,7 @@ export default async function PropertyDetailPage({ params }: Props) {
       />
       <div className="container">
         <Link className="eyebrow" href="/propiedades"><ArrowLeft size={15} /> Volver a propiedades</Link>
-        <div className="gallery" style={{ marginTop: 28 }}>
-          <Image className="gallery-main" src={gallery[0]} alt={property.title} width={1200} height={760} priority />
-          <div className="gallery-thumbs">
-            {gallery.slice(0, 3).map((url) => (
-              <Image className="gallery-thumb" key={url} src={url} alt="" width={360} height={220} />
-            ))}
-          </div>
-        </div>
+        <div style={{ marginTop: 28 }}><PropertyGallery mainImage={{ url: property.mainImageUrl, alt: property.mainImageAlt || property.title }} gallery={galleryImages} title={property.title} /></div>
         <div className="detail-grid" style={{ alignItems: 'start' }}>
           <article>
             <span className="badge" style={{ position: 'static', display: 'inline-flex' }}>{operationLabel(property.operation)}</span>

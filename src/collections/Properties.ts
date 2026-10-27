@@ -88,7 +88,8 @@ export const Properties: CollectionConfig = {
       name: 'mainImage',
       type: 'upload',
       label: 'Imagen principal',
-      relationTo: 'media'
+      relationTo: 'media',
+      admin: { components: { Field: '/src/payload/fields/PropertyImageFields#MainImageField' } }
     },
     {
       name: 'externalImageUrl',
@@ -102,6 +103,7 @@ export const Properties: CollectionConfig = {
       name: 'gallery',
       type: 'array',
       label: 'Galería',
+      admin: { components: { Field: '/src/payload/fields/PropertyImageFields#GalleryField' } },
       fields: [
         {
           name: 'image',

@@ -1,4 +1,5 @@
 import '@payloadcms/next/css'
+import '@/src/payload/admin.css'
 import type { Metadata } from 'next'
 import configPromise from '@payload-config'
 import { RootLayout } from '@payloadcms/next/layouts'

@@ -3,7 +3,11 @@ import { mediaUrl } from '@/src/lib/format'
 import { getPayloadClient } from '@/src/lib/payload'
 import { localized, type Locale } from '@/src/i18n'
 
-export type PublicProperty = (typeof fallbackProperties)[number]
+export type PropertyImage = { url: string; alt: string }
+export type PublicProperty = (typeof fallbackProperties)[number] & {
+  mainImageAlt?: string
+  galleryImages?: PropertyImage[]
+}
 export type PublicSettings = typeof fallbackSettings
 
 function localizeProperty(doc: any, locale: Locale) {
@@ -12,6 +16,11 @@ function localizeProperty(doc: any, locale: Locale) {
     result.features = result.features.map((feature: any) => localized(feature, locale))
   }
   return result
+}
+
+function mediaAlt(media: any, locale: Locale, fallback: string) {
+  if (!media || typeof media !== 'object') return fallback
+  return locale === 'en' ? media.altEn || media.alt || fallback : media.alt || fallback
 }
 
 export async function getSiteSettings(locale: Locale = 'es'): Promise<PublicSettings> {
@@ -53,6 +62,10 @@ export async function getProperties({ featuredOnly = false, locale = 'es' as Loc
       ...doc,
       id: doc.id,
       mainImageUrl: mediaUrl(doc.mainImage, doc.externalImageUrl || fallbackProperties[0].mainImageUrl),
+      mainImageAlt: mediaAlt(doc.mainImage, locale, doc.title),
+      galleryImages: Array.isArray(doc.gallery)
+        ? doc.gallery.map((item: any) => ({ url: mediaUrl(item.image), alt: mediaAlt(item.image, locale, doc.title) })).filter((image: PropertyImage) => image.url)
+        : [],
       galleryUrls: Array.isArray(doc.gallery)
         ? doc.gallery.map((item: any) => mediaUrl(item.image)).filter(Boolean)
         : []
@@ -78,6 +91,10 @@ export async function getProperty(slug: string, locale: Locale = 'es'): Promise<
       ...doc,
       id: doc.id,
       mainImageUrl: mediaUrl(doc.mainImage, doc.externalImageUrl || fallbackProperties[0].mainImageUrl),
+      mainImageAlt: mediaAlt(doc.mainImage, locale, doc.title),
+      galleryImages: Array.isArray(doc.gallery)
+        ? doc.gallery.map((item: any) => ({ url: mediaUrl(item.image), alt: mediaAlt(item.image, locale, doc.title) })).filter((image: PropertyImage) => image.url)
+        : [],
       galleryUrls: Array.isArray(doc.gallery)
         ? doc.gallery.map((item: any) => mediaUrl(item.image)).filter(Boolean)
         : []

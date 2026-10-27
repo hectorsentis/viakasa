@@ -12,6 +12,7 @@ export function formatPrice(price?: number | null, locale: Locale = 'es') {
 export function mediaUrl(media: unknown, fallback = '') {
   if (!media || typeof media !== 'object') return fallback
   const item = media as { blobUrl?: string; url?: string }
+  if (item.blobUrl?.startsWith('http')) return item.blobUrl
   if (item.url?.startsWith('http')) return item.url
   return item.blobUrl || item.url || fallback
 }

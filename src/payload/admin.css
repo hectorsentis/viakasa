@@ -1,0 +1,113 @@
+.property-image-section {
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+}
+
+.property-image-section h3 {
+  font-size: 1rem;
+  margin: 0 0 1rem;
+}
+
+.property-image-picker {
+  align-items: center;
+  border: 1px dashed var(--theme-elevation-400);
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  min-height: 42px;
+  padding: 0.5rem 0.85rem;
+}
+
+.property-image-picker:hover {
+  border-color: var(--theme-text);
+}
+
+.property-image-picker input {
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.property-image-picker:focus-within {
+  outline: 2px solid var(--theme-elevation-800);
+  outline-offset: 3px;
+}
+
+.property-image-hint {
+  color: var(--theme-elevation-700);
+  font-size: 0.875rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.property-image-error {
+  color: var(--theme-error-500);
+  font-weight: 600;
+}
+
+.property-image-saved,
+.property-image-item {
+  align-items: center;
+  display: flex;
+  gap: 0.875rem;
+  min-width: 0;
+}
+
+.property-image-saved img,
+.property-image-item > img {
+  background: var(--theme-elevation-100);
+  border-radius: 4px;
+  flex: 0 0 92px;
+  height: 68px;
+  object-fit: cover;
+  width: 92px;
+}
+
+.property-image-saved span,
+.property-image-item-body > span {
+  overflow-wrap: anywhere;
+}
+
+.property-image-saved-list,
+.property-image-queue {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.property-image-item-body {
+  display: grid;
+  flex: 1;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.property-image-item-body label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.property-image-item-body input {
+  max-width: 420px;
+}
+
+.property-image-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.property-image-actions > span {
+  color: var(--theme-elevation-700);
+  font-size: 0.875rem;
+}

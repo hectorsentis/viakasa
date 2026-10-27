@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, Bath, BedDouble, Calendar, Check, Maximize2 } from 'lucide-react'
@@ -7,6 +6,7 @@ import { ArrowLeft, Bath, BedDouble, Calendar, Check, Maximize2 } from 'lucide-r
 import { getProperty } from '@/src/lib/content'
 import { formatPrice, operationLabel } from '@/src/lib/format'
 import { ContactForm } from '@/src/ui/ContactForm'
+import { PropertyGallery } from '@/src/ui/PropertyGallery'
 
 type Props = { params: Promise<{ slug: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> { const { slug } = await params; const property = await getProperty(slug, 'en'); if (!property) return {}; return { title: property.title, description: property.description, alternates: { canonical: `/en/properties/${slug}`, languages: { 'es-ES': `/propiedades/${slug}`, 'en-GB': `/en/properties/${slug}` } }, openGraph: { images: [property.mainImageUrl] } } }
@@ -15,10 +15,10 @@ export default async function PropertyDetailPage({ params }: Props) {
   const { slug } = await params
   const property = await getProperty(slug, 'en')
   if (!property) notFound()
-  const gallery = property.galleryUrls?.length ? property.galleryUrls : [property.mainImageUrl]
+  const galleryImages = property.galleryImages || (property.galleryUrls || []).map((url) => ({ url, alt: property.title }))
   return <section className="detail-hero"><div className="container">
     <Link className="eyebrow" href="/en/properties"><ArrowLeft size={15} /> Back to properties</Link>
-    <div className="gallery" style={{ marginTop: 28 }}><Image className="gallery-main" src={gallery[0]} alt={property.title} width={1200} height={760} priority /><div className="gallery-thumbs">{gallery.slice(0, 3).map((url) => <Image className="gallery-thumb" key={url} src={url} alt="" width={360} height={220} />)}</div></div>
+    <div style={{ marginTop: 28 }}><PropertyGallery mainImage={{ url: property.mainImageUrl, alt: property.mainImageAlt || property.title }} gallery={galleryImages} title={property.title} locale="en" /></div>
     <div className="detail-grid" style={{ alignItems: 'start' }}><article>
       <span className="badge" style={{ position: 'static', display: 'inline-flex' }}>{operationLabel(property.operation, 'en')}</span><p className="property-location" style={{ marginTop: 18 }}>{property.location}</p><h1 className="section-title">{property.title}</h1>
       <div className="features-row" style={{ maxWidth: 680, borderBottom: '1px solid var(--border)', paddingBottom: 16 }}><span><BedDouble size={17} color="var(--gold-600)" /><strong>{property.rooms || '-'}</strong> Bedrooms</span><span><Bath size={17} color="var(--gold-600)" /><strong>{property.bathrooms || '-'}</strong> Bathrooms</span><span><Maximize2 size={17} color="var(--gold-600)" /><strong>{property.area ? `${property.area} m²` : '-'}</strong> Area</span><span><Calendar size={17} color="var(--gold-600)" /><strong>{property.year || '-'}</strong> Year</span></div>
