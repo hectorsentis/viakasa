@@ -17,6 +17,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
  */
 
 const MAX_UPLOAD_SIZE = 20 * 1024 * 1024
+const BLOB_PREFIX = 'propiedades'
 const MAX_INPUT_SIZE = 60 * 1024 * 1024
 const MAX_EDGE = 2560
 const RECOMPRESS_ABOVE = 1.5 * 1024 * 1024
@@ -98,7 +99,9 @@ async function uploadImage(
   if (file.size > MAX_UPLOAD_SIZE) throw new Error(`${original.name} supera los 20 MB incluso tras optimizarla.`)
   const endpoint = urls('/vercel-blob-client-upload-route')
   setStatus('Subiendo…', 0)
-  const blob = await upload(file.name, file, {
+  // Debe coincidir con el `prefix` de la colección en payload.config.ts: al
+  // registrar el medio, el servidor busca el archivo en `propiedades/<nombre>`.
+  const blob = await upload(`${BLOB_PREFIX}/${file.name}`, file, {
     access: 'public', clientPayload: 'media', contentType: file.type, handleUploadUrl: endpoint,
     onUploadProgress: ({ percentage }) => setStatus(`Subiendo… ${Math.round(percentage)}%`, percentage)
   })
