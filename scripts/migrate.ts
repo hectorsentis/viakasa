@@ -53,9 +53,10 @@ async function clearDevMarker() {
 }
 
 async function main() {
-  const { default: config } = await import('@payload-config')
-
+  // Antes de importar la config: decide qué URL de Postgres usa (Session pooler).
   process.env.PAYLOAD_MIGRATING = 'true'
+
+  const { default: config } = await import('@payload-config')
 
   await payload.init({
     config,

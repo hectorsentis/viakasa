@@ -24,12 +24,14 @@ const fromName = process.env.EMAIL_FROM_NAME || 'Viakasa'
 const fromAddress = process.env.EMAIL_FROM_ADDRESS || 'info@viakasa.es'
 
 function resolveDatabaseUrl() {
-  const candidates = [
-    process.env.DATABASE_URL,
-    process.env.POSTGRES_URL_NON_POOLING,
-    process.env.POSTGRES_URL,
-    process.env.POSTGRES_PRISMA_URL
-  ]
+  // En tiempo de ejecución se usa el Transaction pooler de Supabase (6543), que
+  // multiplexa conexiones y aguanta muchas instancias serverless a la vez. El
+  // Session pooler (5432, NON_POOLING) sólo admite 15 clientes en total y se
+  // reserva para las migraciones, que necesitan una sesión estable.
+  const migrating = process.env.PAYLOAD_MIGRATING === 'true'
+  const candidates = migrating
+    ? [process.env.DATABASE_URL, process.env.POSTGRES_URL_NON_POOLING, process.env.POSTGRES_URL, process.env.POSTGRES_PRISMA_URL]
+    : [process.env.DATABASE_URL, process.env.POSTGRES_URL, process.env.POSTGRES_PRISMA_URL, process.env.POSTGRES_URL_NON_POOLING]
 
   const selected = candidates.find((value) => {
     if (!value) return false
