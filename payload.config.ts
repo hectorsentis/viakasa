@@ -121,7 +121,14 @@ export default buildConfig({
     push: false,
     pool: {
       connectionString: resolveDatabaseUrl(),
-      ssl: resolvePostgresSsl()
+      ssl: resolvePostgresSsl(),
+      // El Session pooler de Supabase admite pocos clientes en total (pool_size 15)
+      // y en Vercel cada instancia serverless crea su propio pool (10 por defecto).
+      // Con varias instancias concurrentes se agota el cupo (EMAXCONNSESSION) y cae
+      // tanto la web como el panel. Pool pequeño y conexiones ociosas liberadas pronto.
+      max: Number(process.env.POSTGRES_POOL_MAX || 3),
+      idleTimeoutMillis: 5_000,
+      connectionTimeoutMillis: 15_000
     }
   }),
   editor: lexicalEditor(),
