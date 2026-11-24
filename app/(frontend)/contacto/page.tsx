@@ -8,7 +8,7 @@ import { ContactForm } from '@/src/ui/ContactForm'
 export const metadata: Metadata = pageMetadata({
   title: 'Contacto',
   description:
-    'Contacta con Viakasa para comprar, vender, valorar o gestionar una vivienda en Madrid, Tenerife o cualquier punto de España.',
+    'Contacta con Viakasa para comprar, vender, valorar o gestionar una vivienda en Madrid o Tenerife.',
   path: '/contacto'
 })
 

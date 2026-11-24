@@ -1,8 +1,7 @@
 import nextEnv from '@next/env'
 import { getPayload } from 'payload'
 
-import { fallbackProperties, fallbackServices, fallbackSettings } from '../src/data/fallback'
-import { slugify } from '../src/utils/slugify'
+import { fallbackServices, fallbackSettings } from '../src/data/fallback'
 
 const { loadEnvConfig } = nextEnv
 loadEnvConfig(process.cwd())
@@ -40,43 +39,7 @@ async function main() {
     }
   }
 
-  for (const property of fallbackProperties) {
-    const existing = await payload.find({ collection: 'properties', where: { slug: { equals: property.slug } }, limit: 1 })
-    if (existing.docs.length) continue
-
-    await payload.create({
-      collection: 'properties',
-      data: {
-        status: 'published',
-        featured: property.featured,
-        title: property.title,
-        titleEn: property.titleEn,
-        slug: property.slug || slugify(property.title),
-        location: property.location,
-        locationEn: property.locationEn,
-        city: property.city as 'Madrid' | 'Tenerife' | 'Otra',
-        price: property.price,
-        priceNote: property.priceNote,
-        operation: property.operation as 'sale' | 'rent' | 'sold',
-        propertyType: property.propertyType,
-        propertyTypeEn: property.propertyTypeEn,
-        rooms: property.rooms,
-        bathrooms: property.bathrooms,
-        area: property.area,
-        year: property.year,
-        description: property.description,
-        descriptionEn: property.descriptionEn,
-        features: property.features,
-        externalImageUrl: property.mainImageUrl,
-        gallery: [],
-        seo: {
-          title: property.title,
-          description: property.description
-        }
-      },
-      overrideAccess: true
-    })
-  }
+  // Las propiedades no se siembran: toda la cartera se gestiona desde el panel.
 
   payload.logger.info('Semilla completada.')
   process.exit(0)

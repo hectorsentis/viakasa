@@ -7,7 +7,7 @@ import { ServiceCard } from '@/src/ui/ServiceCard'
 export const metadata: Metadata = pageMetadata({
   title: 'Servicios inmobiliarios integrales',
   description:
-    'Compra, venta, valoración, asesoría legal, financiación y gestión inmobiliaria con Viakasa en Madrid, Tenerife y toda España.',
+    'Compra, venta, valoración, asesoría legal, financiación y gestión inmobiliaria con Viakasa en Madrid y Tenerife.',
   path: '/servicios'
 })
 

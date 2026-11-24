@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/brand/viakasa-icon.png',
-    apple: '/brand/viakasa-icon.png'
+    apple: '/brand/viakasa-apple-icon.png'
   },
   openGraph: {
     title: defaultSeo.title,

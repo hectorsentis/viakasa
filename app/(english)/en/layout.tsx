@@ -9,7 +9,7 @@ import { siteUrl } from '@/src/lib/seo'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: 'Viakasa · Property advisers in Madrid and Tenerife', template: '%s · Viakasa' },
-  description: 'Complete property advisory for buying, selling and managing homes in Madrid, Tenerife and across Spain.',
+  description: 'Complete property advisory for buying, selling and managing homes in Madrid and Tenerife.',
   alternates: { canonical: `${siteUrl}/en`, languages: { 'es-ES': siteUrl, 'en-GB': `${siteUrl}/en` } },
   openGraph: { locale: 'en_GB', siteName: 'Viakasa', type: 'website' }
 }

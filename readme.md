@@ -1,6 +1,6 @@
 # Viakasa
 
-Sitio web de producción para Viakasa, asesoría inmobiliaria en Madrid, Tenerife y toda España. Incluye frontend público en español, Payload CMS para administración, gestión de propiedades, solicitudes de contacto y configuración lista para desplegar en Vercel.
+Sitio web de producción para Viakasa, asesoría inmobiliaria en Madrid y Tenerife. Incluye frontend público en español, Payload CMS para administración, gestión de propiedades, solicitudes de contacto y configuración lista para desplegar en Vercel.
 
 ## Desarrollo
 

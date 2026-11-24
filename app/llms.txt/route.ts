@@ -6,7 +6,7 @@ export async function GET() {
   const body = [
     '# Viakasa',
     '',
-    '> Asesoría inmobiliaria integral en Madrid, Tenerife y toda España.',
+    '> Asesoría inmobiliaria integral en Madrid y Tenerife.',
     '',
     `Sitio oficial: ${absoluteUrl('/')}`,
     `Contacto: ${settings.phone} · ${settings.email}`,

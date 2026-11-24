@@ -6,6 +6,7 @@ import { getProperties, getServices, getSiteSettings } from '@/src/lib/content'
 import { ContactForm } from '@/src/ui/ContactForm'
 import { PropertyCard } from '@/src/ui/PropertyCard'
 import { ServiceCard } from '@/src/ui/ServiceCard'
+import { TrustStrip } from '@/src/ui/TrustStrip'
 
 export default async function EnglishHomePage() {
   const [settings, services, properties] = await Promise.all([
@@ -15,7 +16,7 @@ export default async function EnglishHomePage() {
     <section className="hero">
       <Image className="hero-image" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=82" alt="" width={1800} height={1100} priority />
       <div className="container hero-content">
-        <span className="eyebrow">Madrid · Tenerife · Across Spain</span>
+        <span className="eyebrow">Madrid · Tenerife</span>
         <h1>{settings.heroTitle}</h1><p>{settings.heroText}</p>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
           <Link className="button button-accent" href="/en/properties">{settings.primaryCta} <ArrowRight size={17} /></Link>
@@ -23,10 +24,7 @@ export default async function EnglishHomePage() {
         </div>
       </div>
     </section>
-    <section className="trust-strip"><div className="container trust-grid">
-      <div><strong>+15</strong><span>Years of experience</span></div><div><strong>+850</strong><span>Completed transactions</span></div>
-      <div><strong>98%</strong><span>Satisfied clients</span></div><div><strong>2</strong><span>Offices · Madrid and Tenerife</span></div>
-    </div></section>
+    <TrustStrip locale="en" />
     <section className="section"><div className="container"><span className="eyebrow">Our services</span><h2 className="section-title">Complete guidance, from start to finish</h2><p className="section-intro">One trusted point of contact for every decision about your property.</p><div className="grid-4">{services.map((service: any) => <ServiceCard key={service.id || service.title} service={service} />)}</div></div></section>
     <section className="section section-alt"><div className="container"><span className="eyebrow">Featured properties</span><h2 className="section-title">A selection worth your attention</h2><div className="grid-3">{properties.map((property) => <PropertyCard key={property.id} property={property} locale="en" />)}</div></div></section>
     <section className="section"><div className="container about-grid">

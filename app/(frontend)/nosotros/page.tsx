@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, jsonLdScript, pageMetadata } from '@/src/lib/seo'
 export const metadata: Metadata = pageMetadata({
   title: 'Nosotros',
   description:
-    'Conoce Viakasa, asesoría inmobiliaria cercana y rigurosa para comprar, vender y gestionar viviendas en Madrid, Tenerife y toda España.',
+    'Conoce Viakasa, asesoría inmobiliaria cercana y rigurosa para comprar, vender y gestionar viviendas en Madrid y Tenerife.',
   path: '/nosotros'
 })
 
@@ -36,7 +36,7 @@ export default function AboutPage() {
           <span className="eyebrow">Nosotros</span>
           <h1 className="section-title">Una asesoría cercana con rigor profesional</h1>
           <p className="section-intro">
-            Viakasa nace para ofrecer una vía directa, clara y segura en decisiones inmobiliarias importantes. Trabajamos desde Madrid y Tenerife con vocación nacional.
+            Viakasa nace para ofrecer una vía directa, clara y segura en decisiones inmobiliarias importantes. Trabajamos desde Madrid y Tenerife.
           </p>
           <ul className="footer-list" style={{ marginTop: 28, color: 'var(--ink)' }}>
             {['Acompañamiento personal de inicio a fin', 'Criterio legal y financiero integrado', 'Comunicación clara, sin presión comercial'].map((item) => (

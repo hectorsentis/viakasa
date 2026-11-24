@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Viakasa · Asesoría inmobiliaria',
     short_name: 'Viakasa',
-    description: 'Asesoría inmobiliaria integral en Madrid, Tenerife y toda España.',
+    description: 'Asesoría inmobiliaria integral en Madrid y Tenerife.',
     start_url: '/',
     display: 'standalone',
     background_color: '#FAF8F3',

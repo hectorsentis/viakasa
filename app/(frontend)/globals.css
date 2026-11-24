@@ -326,27 +326,35 @@ select {
 
 .trust-grid {
   display: grid;
-  gap: 24px;
   grid-template-columns: repeat(4, 1fr);
-  text-align: center;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
 }
 
-.trust-grid strong {
-  color: var(--gold-400);
-  display: block;
-  font-family: var(--font-serif);
-  font-size: 38px;
-  line-height: 1;
+.trust-grid li {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  padding: 6px 20px;
+}
+
+.trust-grid li + li {
+  border-left: 1px solid rgba(216, 187, 117, 0.22);
+}
+
+.trust-grid svg {
+  flex: none;
 }
 
 .trust-grid span {
-  color: var(--navy-200);
-  display: block;
+  color: var(--navy-100);
   font-family: var(--font-brand);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  margin-top: 8px;
+  letter-spacing: 0.12em;
+  line-height: 1.45;
   text-transform: uppercase;
 }
 
@@ -710,6 +718,15 @@ select {
 
   .trust-grid {
     grid-template-columns: repeat(2, 1fr);
+    row-gap: 18px;
+  }
+
+  .trust-grid li {
+    justify-content: flex-start;
+  }
+
+  .trust-grid li + li {
+    border-left: 0;
   }
 
   .gallery-main-frame {
@@ -743,6 +760,11 @@ select {
 
   .trust-grid {
     grid-template-columns: 1fr;
+    row-gap: 14px;
+  }
+
+  .trust-grid li {
+    padding: 0 4px;
   }
 
   .gallery-main-frame {

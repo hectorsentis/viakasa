@@ -5,7 +5,7 @@ import { breadcrumbJsonLd, jsonLdScript, pageMetadata } from '@/src/lib/seo'
 import { PropertyCard } from '@/src/ui/PropertyCard'
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Propiedades en Madrid, Tenerife y toda España',
+  title: 'Propiedades en Madrid y Tenerife',
   description:
     'Consulta viviendas seleccionadas por Viakasa: pisos, áticos, villas y oportunidades inmobiliarias con asesoramiento legal y financiero.',
   path: '/propiedades'

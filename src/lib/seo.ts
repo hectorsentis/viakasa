@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import type { PublicProperty, PublicSettings } from '@/src/lib/content'
-import { formatPrice, operationLabel } from '@/src/lib/format'
+import { formatPrice, isNoLongerAvailable, operationLabel } from '@/src/lib/format'
 import { translatePath } from '@/src/i18n'
 
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.viakasa.es').replace(/\/$/, '')
@@ -9,7 +9,7 @@ export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.viakasa
 export const defaultSeo = {
   title: 'Viakasa · Asesoría inmobiliaria en Madrid y Tenerife',
   description:
-    'Asesoría inmobiliaria integral para comprar, vender y gestionar viviendas en Madrid, Tenerife y toda España con respaldo legal y financiero.',
+    'Asesoría inmobiliaria integral para comprar, vender y gestionar viviendas en Madrid y Tenerife con respaldo legal y financiero.',
   keywords: [
     'Viakasa',
     'asesoría inmobiliaria',
@@ -82,7 +82,7 @@ export function organizationJsonLd(settings: PublicSettings) {
     description: defaultSeo.description,
     telephone: settings.phone,
     email: settings.email,
-    areaServed: ['Madrid', 'Tenerife', 'España'],
+    areaServed: ['Madrid', 'Tenerife'],
     address: [
       { '@type': 'PostalAddress', addressLocality: 'Madrid', addressCountry: 'ES' },
       { '@type': 'PostalAddress', addressLocality: 'Santa Cruz de Tenerife', addressCountry: 'ES' }
@@ -137,7 +137,11 @@ export function realEstateListingJsonLd(property: PublicProperty) {
       '@type': 'Offer',
       price: property.price || undefined,
       priceCurrency: 'EUR',
-      availability: property.operation === 'sold' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+      availability: isNoLongerAvailable(property.commercialStatus)
+        ? 'https://schema.org/SoldOut'
+        : property.commercialStatus === 'reserved'
+          ? 'https://schema.org/LimitedAvailability'
+          : 'https://schema.org/InStock',
       url: absoluteUrl(`/propiedades/${property.slug}`),
       itemCondition: 'https://schema.org/UsedCondition'
     },
@@ -146,9 +150,11 @@ export function realEstateListingJsonLd(property: PublicProperty) {
       { '@type': 'PropertyValue', name: 'Ubicación', value: property.location },
       { '@type': 'PropertyValue', name: 'Habitaciones', value: property.rooms },
       { '@type': 'PropertyValue', name: 'Baños', value: property.bathrooms },
-      { '@type': 'PropertyValue', name: 'Superficie', value: property.area ? `${property.area} m²` : undefined },
+      { '@type': 'PropertyValue', name: 'Superficie construida', value: property.area ? `${property.area} m²` : undefined },
+      { '@type': 'PropertyValue', name: 'Superficie útil', value: property.usableArea ? `${property.usableArea} m²` : undefined },
+      { '@type': 'PropertyValue', name: 'Referencia', value: property.reference },
       { '@type': 'PropertyValue', name: 'Precio', value: formatPrice(property.price) }
-    ].filter((item) => item.value !== undefined)
+    ].filter((item) => item.value != null && item.value !== '')
   }
 }
 

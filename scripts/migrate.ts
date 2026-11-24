@@ -27,11 +27,17 @@ const migrationName = process.argv[3]
  * migraciones se apliquen en lugar de saltarse en silencio.
  */
 async function clearDevMarker() {
-  const existing = await payload.find({
-    collection: 'payload-migrations',
-    limit: 0,
-    where: { batch: { equals: -1 } }
-  })
+  let existing
+  try {
+    existing = await payload.find({
+      collection: 'payload-migrations',
+      limit: 0,
+      where: { batch: { equals: -1 } }
+    })
+  } catch {
+    // Base de datos vacía: la tabla payload_migrations aún no existe.
+    return
+  }
 
   if (!existing.docs.length) return
 

@@ -11,7 +11,7 @@ export function Footer({ settings, locale = 'es' }: { settings: PublicSettings; 
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <Image className="footer-logo" src="/brand/viakasa-logo.png" alt="Viakasa" width={240} height={90} />
+          <Image className="footer-logo" src="/brand/viakasa-logo.png" alt="Viakasa" width={240} height={83} />
           <p>{settings.footerText}</p>
         </div>
         <div>

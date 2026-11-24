@@ -1,5 +1,6 @@
 import { MainImageField as MainImageField_43cd742a7655023ada766696c10c7eba } from '../../../src/payload/fields/PropertyImageFields'
 import { GalleryField as GalleryField_43cd742a7655023ada766696c10c7eba } from '../../../src/payload/fields/PropertyImageFields'
+import { PropertyQuickActions as PropertyQuickActions_b5d1e2f3a4c5d6e7f8a9b0c1d2e3f4a5 } from '../../../src/payload/components/PropertyQuickActions'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -32,6 +33,7 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 export const importMap = {
   "/src/payload/fields/PropertyImageFields#MainImageField": MainImageField_43cd742a7655023ada766696c10c7eba,
   "/src/payload/fields/PropertyImageFields#GalleryField": GalleryField_43cd742a7655023ada766696c10c7eba,
+  "/src/payload/components/PropertyQuickActions#PropertyQuickActions": PropertyQuickActions_b5d1e2f3a4c5d6e7f8a9b0c1d2e3f4a5,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,

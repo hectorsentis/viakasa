@@ -6,6 +6,7 @@ import { getProperties, getServices, getSiteSettings } from '@/src/lib/content'
 import { ContactForm } from '@/src/ui/ContactForm'
 import { PropertyCard } from '@/src/ui/PropertyCard'
 import { ServiceCard } from '@/src/ui/ServiceCard'
+import { TrustStrip } from '@/src/ui/TrustStrip'
 import { breadcrumbJsonLd, jsonLdScript } from '@/src/lib/seo'
 
 export default async function HomePage() {
@@ -33,7 +34,7 @@ export default async function HomePage() {
           priority
         />
         <div className="container hero-content">
-          <span className="eyebrow">Madrid · Tenerife · Toda España</span>
+          <span className="eyebrow">Madrid · Tenerife</span>
           <h1>{settings.heroTitle}</h1>
           <p>{settings.heroText}</p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
@@ -47,14 +48,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="trust-strip">
-        <div className="container trust-grid">
-          <div><strong>+15</strong><span>Años de experiencia</span></div>
-          <div><strong>+850</strong><span>Operaciones cerradas</span></div>
-          <div><strong>98%</strong><span>Clientes satisfechos</span></div>
-          <div><strong>2</strong><span>Sedes · Madrid y Tenerife</span></div>
-        </div>
-      </section>
+      <TrustStrip />
 
       <section className="section">
         <div className="container">

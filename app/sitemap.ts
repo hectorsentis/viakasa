@@ -24,17 +24,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl('/en/cookies'), lastModified: now, changeFrequency: 'yearly', priority: 0.2 }
   ]
 
-  const properties = await getProperties()
+  // Sólo propiedades publicadas (getProperties ya filtra); se excluyen las marcadas como noindex.
+  const properties = (await getProperties()).filter((property) => !property.seo?.noIndex)
   const propertyRoutes: MetadataRoute.Sitemap = properties.map((property) => ({
     url: absoluteUrl(`/propiedades/${property.slug}`),
-    lastModified: now,
+    lastModified: property.updatedAt ? new Date(property.updatedAt) : now,
     changeFrequency: 'weekly',
     priority: property.featured ? 0.85 : 0.75
   }))
 
   const englishPropertyRoutes: MetadataRoute.Sitemap = properties.map((property) => ({
     url: absoluteUrl(`/en/properties/${property.slug}`),
-    lastModified: now,
+    lastModified: property.updatedAt ? new Date(property.updatedAt) : now,
     changeFrequency: 'weekly',
     priority: property.featured ? 0.85 : 0.75
   }))
